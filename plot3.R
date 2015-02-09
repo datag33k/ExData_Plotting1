@@ -29,7 +29,7 @@ lines(dat$Date,dat[,8],col="blue")
 legend("topright",legend=names(dat[,6:8]),pch="_",col=c("black","red","blue"))
 
 # print to PNG
-dev.print(png, file="plot3.png", width=480, height=480, pointsize=10)
+dev.print(png, file="plot3.png", width=575, height=575, pointsize=10)
 
 # close off device connection
 dev.off(png)
