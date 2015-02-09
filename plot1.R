@@ -5,6 +5,7 @@
 # download the file if it does not exist
 if !(file.exists("household_power_consumption.txt")) {
   download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip", "household_power_consumption.txt", method="curl")
+  unzip("household_power_consumption.zip", overwrite = TRUE)
 }
 
 # read the file for manipulation/plotting
@@ -22,6 +23,7 @@ dat$Date <- dt
 dat <- dat[,c(1,3:9)]
 
 # build histogram, plot1
+library(stats)
 hist(dat$Global_active_power, main="Global Active Power", xlab="Global Active Power (kilowatts)", ylab="Frequency", col="red")
 
 # print to PNG

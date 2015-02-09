@@ -5,6 +5,7 @@
 # download the file if it does not exist
 if !(file.exists("household_power_consumption.txt")) {
   download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip", "household_power_consumption.txt", method="curl")
+  unzip("household_power_consumption.zip", overwrite = TRUE)
 }
 
 # read the file for manipulation/plotting
@@ -23,11 +24,12 @@ dat <- dat[,c(1,3:9)]
 
 # build plot3
 plot(dat$Date,dat[,6],ylab="Energy sub metering",type="l",xlab="")
-plot(dat$Date,dat[,7],ylab="Energy sub metering",type="l",xlab="",col="red")
-plot(dat$Date,dat[,8],ylab="Energy sub metering",type="l",xlab="",col="blue")
+lines(dat$Date,dat[,7],col="red")
+lines(dat$Date,dat[,8],col="blue")
+legend("topright",legend=names(dat[,6:8]),pch="_",col=c("black","red","blue"))
 
 # print to PNG
-dev.print(png, file="plot3.png", width=480, height=480)
+dev.print(png, file="plot3.png", width=480, height=480, pointsize=10)
 
 # close off device connection
 dev.off(png)

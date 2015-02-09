@@ -5,6 +5,7 @@
 # download the file if it does not exist
 if !(file.exists("household_power_consumption.txt")) {
   download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip", "household_power_consumption.txt", method="curl")
+  unzip("household_power_consumption.zip", overwrite = TRUE)
 }
 
 # read the file for manipulation/plotting
@@ -22,12 +23,18 @@ dat$Date <- dt
 dat <- dat[,c(1,3:9)]
 
 # build plot4
-plot(dat$Date,dat$Global_active_power,ylab="Global Active Power (kilowatts)",type="l",xlab="")
-
-legend("topright",legend="data",pch=20)
+library(stats)
+par(mfrow = c(2,2))
+plot(dat$Date,dat$Global_active_power,ylab="Global Active Power (kilowatts)",xlab="",type="l")
+plot(dat$Date,dat$Voltage,ylab="Voltage",xlab="datetime",type="l")
+plot(dat$Date,dat[,6],ylab="Energy sub metering",type="l",xlab="")
+lines(dat$Date,dat[,7],col="red")
+lines(dat$Date,dat[,8],col="blue")
+legend("topright",legend=names(dat[,6:8]),pch="___",cex=1,col=c("black","red","blue"))
+plot(dat$Date,dat$Global_reactive_power,ylab="Global_reactive_power",xlab="datetime",type="l")
 
 # print to PNG
-dev.print(png, file="plot4.png", width=480, height=480)
+dev.print(png, file="plot4.png", width=480, height=480, pointsize=10)
 
 # close off device connection
 dev.off(png)
